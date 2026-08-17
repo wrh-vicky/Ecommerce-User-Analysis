@@ -3,9 +3,9 @@
 
 ## 0. BI报表
 
-### Page 1 — Executive Overview
+### Page 1 — Interactive Analysis
 
-![Executive Overview](images/dashboard/Interactive Analysis base.png)
+![Interactive Analysis](images/dashboard/Interactive_Analysis_base.png)
 
 ### Page 2 — Behavior & Conversion
 
