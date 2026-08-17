@@ -21,12 +21,5 @@
 | Weekend                 | 是否周末     | 布尔 | 是否在周末访问         |
 | Revenue                 | 是否购买     | 布尔 | 本次Session是否最终购买 |
 
-# SQL发现与Python验证
+# 每个表名说明
 
-| SQL发现 | Python验证方法 | 结果 | 结论 |
-|---|---|---|---|
-| 高浏览深度Session CVR更高 | ProductRelated分布 + 分组CVR | 待填写 | 待填写 |
-| 长停留Session CVR较高 | Duration分组分析 | 待填写 | 待填写 |
-| 新老用户CVR不同 | VisitorType行为比较 | 待填写 | 待填写 |
-| 高潜Session存在明显特征 | P75高潜Session比较 | 待填写 | 待填写 |
-| Bounce/Exit与购买有关 | 相关性 + 分组比较 | 待填写 | 待填写 |
