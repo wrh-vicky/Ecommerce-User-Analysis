@@ -1,152 +1,99 @@
-# SmartBuy电商用户增长与转化分析
+# SmartBuy 电商用户增长与转化分析
 
-> 基于 SQL、Python、MySQL 与 Power BI 的电商用户行为分析项目，围绕用户购买转化问题，完成从原始数据处理、数据仓库分层、业务分析、用户分层、购买预测到 BI Dashboard 的完整分析链路。
+> 基于 SQL、Python、MySQL 与 Power BI
+> 的电商用户行为分析项目，围绕购买转化问题，完成原始数据处理、数仓分层、业务分析、高潜
+> Session 识别、购买预测与 BI Dashboard 展示。
 
-## 0. Power BI展示
+## 0. BI报表
 
 ### Page 1 — Executive Overview
 
-
 ### Page 2 — Behavior & Conversion
-
 
 ### Page 3 — High Potential Sessions
 
-![]()
-![]()
-![]()
 
-具体报表展示将在
+## 1. 项目背景
 
-## 1. 项目简介
+SmartBuy 平台访问量增长，但购买增长相对不足。本项目基于用户 Session
+行为数据，分析影响购买转化的潜在因素，识别关键转化环节与高潜
+Session，为产品、运营和渠道优化提供数据支持。
 
-SmartBuy 是一个模拟电商平台。
+核心问题包括：
 
-项目背景设定为：平台访问量持续增长，但购买增长相对不足。因此，本项目从用户Session行为数据出发，分析影响购买转化的潜在因素，并重点回答以下问题：
+-   平台整体购买转化情况如何？
+-   新访客与回访访客的转化是否不同？
+-   商品浏览深度、停留时间与购买有什么关系？
+-   BounceRates、ExitRates、PageValues 与购买结果有什么关系？
+-   哪些 Session 已表现出较强购买意向但最终没有购买？
+-   规则法与模型法能否进一步识别高潜 Session？
+-   如何将验证后的指标沉淀到 DWS / ADS 并供 Power BI 使用？
 
-* 平台整体购买转化情况如何？
-* 新访客与回访访客的转化表现是否存在差异？
-* 商品浏览深度和停留时间与购买行为有什么关系？
-* BounceRates、ExitRates、PageValues等指标与购买结果有什么关系？
-* 哪些Session已表现出较强购买意向，但最终没有完成购买？
-* 如何通过规则和模型进一步识别高潜Session？
-* 如何将分析指标沉淀到DWS / ADS，并提供给Power BI使用？
-
-最终形成：
-
-```text
-Raw Data
-   ↓
-ODS
-   ↓
-DWD
-   ↓
-SQL Business Analysis
-   ↓
-Python EDA
-   ↓
-Session Segmentation
-   ↓
-High Potential Analysis
-   ↓
-Purchase Prediction
-   ↓
-DWS
-   ↓
-ADS
-   ↓
-Power BI Dashboard
+``` text
+Raw Data → ODS → DWD → SQL Analysis → Python EDA
+→ Session Segmentation → High Potential Analysis
+→ Purchase Prediction → DWS → ADS → Power BI
 ```
 
-本项目不仅关注“得到分析结果”，也关注指标口径、数据分层、数据质量和分析结果的工程化沉淀。
+------------------------------------------------------------------------
 
----
+## 2. 数据集与指标口径
 
-## 2. 数据集
+项目使用 **Online Shoppers Purchasing Intention Dataset**。
 
-项目使用**Online Shoppers Purchasing Intention Dataset**。
-
-数据粒度为：
-
-```text
-一行 = 一次网站访问Session
+``` text
+一行 = 一次网站访问 Session
 ```
 
-因此，本项目中的12,330条记录代表 **12,330个Session**，而不是12,330个独立用户。
+因此 12,330 条记录表示 12,330 个 Session，而不是 12,330 个独立用户。
 
-核心数据规模：
+  指标                          结果
+  ------------------------- --------
+  Total Sessions              12,330
+  Purchase Sessions            1,908
+  Session Conversion Rate     15.47%
 
-| 指标                      |     结果 |
-| ----------------------- | -----: |
-| Total Sessions          | 12,330 |
-| Purchase Sessions       |  1,908 |
-| Session Conversion Rate | 15.47% |
+主要字段：
 
-主要字段包括：
+  字段                      含义
+  ------------------------- ---------------------------
+  Administrative            行政类页面访问次数
+  Administrative_Duration   行政类页面停留时间
+  Informational             信息类页面访问次数
+  Informational_Duration    信息类页面停留时间
+  ProductRelated            商品页面访问次数
+  ProductRelated_Duration   商品页面停留时间
+  BounceRates               跳出率
+  ExitRates                 退出率
+  PageValues                页面价值
+  SpecialDay                特殊日期指数
+  Month                     月份
+  OperatingSystems          操作系统
+  Browser                   浏览器
+  Region                    地区
+  TrafficType               流量类型
+  VisitorType               新访客/回访访客
+  Weekend                   是否周末
+  Revenue                   本次 Session 是否最终购买
 
-| 字段                      | 含义                |
-| ----------------------- | ----------------- |
-| Administrative          | 行政类页面访问次数         |
-| Administrative_Duration | 行政类页面停留时间         |
-| Informational           | 信息类页面访问次数         |
-| Informational_Duration  | 信息类页面停留时间         |
-| ProductRelated          | 商品相关页面访问次数        |
-| ProductRelated_Duration | 商品相关页面停留时间        |
-| BounceRates             | 跳出率               |
-| ExitRates               | 退出率               |
-| PageValues              | 页面价值              |
-| SpecialDay              | 特殊日期指数            |
-| Month                   | 访问月份              |
-| OperatingSystems        | 操作系统              |
-| Browser                 | 浏览器               |
-| Region                  | 地区                |
-| TrafficType             | 流量类型              |
-| VisitorType             | 访客类型              |
-| Weekend                 | 是否周末              |
-| Revenue                 | 本次 Session 是否最终购买 |
+完整字段说明见 `docs/data_dictionary.md`。
 
----
+------------------------------------------------------------------------
 
 ## 3. 技术栈
 
-### 数据处理与分析
+-   **数据库与 SQL：** MySQL、SQL
+-   **Python：** Pandas、NumPy、Matplotlib、Scikit-learn
+-   **模型：** Logistic Regression、Random Forest
+-   **数据库连接：** SQLAlchemy、PyMySQL
+-   **BI：** Power BI
+-   **开发环境：** Jupyter Notebook、Git、GitHub
 
-* MySQL
-* SQL
-* Python
-* Pandas
-* NumPy
+------------------------------------------------------------------------
 
-### 数据可视化
+## 4. 数据架构
 
-* Matplotlib
-* Power BI
-
-### 机器学习
-
-* Scikit-learn
-* Logistic Regression
-* Random Forest
-
-### 数据库访问
-
-* SQLAlchemy
-* PyMySQL
-
-### 开发环境
-
-* Jupyter Notebook
-* MySQL
-* Power BI Desktop
-* Git / GitHub
-
----
-
-## 4. 项目架构
-
-项目采用分层数据架构：
-
-```text
+``` text
 CSV
  ↓
 ODS
@@ -162,24 +109,13 @@ Power BI
 
 ### ODS
 
-ODS 层保留原始数据结构，用于承接 CSV 数据并进行基础数据质量检查。
-
-主要完成：
-
-* 数据导入
-* 空值检查
-* 重复值检查
-* 字段范围检查
-* 类别字段检查
-* 基础数据质量验证
+承接原始 CSV，完成数据量、空值、重复值、字段范围和类别值等基础质量检查。
 
 ### DWD
 
-DWD 层将原始 Session 数据进行标准化，并生成业务分析所需的基础衍生字段。
+对 Session 数据进行标准化并生成基础衍生字段，例如：
 
-例如：
-
-```text
+``` text
 session_id
 month_num
 visitor_type_name
@@ -190,21 +126,14 @@ total_page_duration
 product_view_ratio
 ```
 
-DWD 保持：
-
-```text
-一行 = 一个 Session
-```
-
-并作为后续 SQL、Python 和数仓聚合的统一明细数据源。
+DWD 保持"一行 = 一个 Session"，作为 SQL、Python
+和后续聚合的统一明细数据源。
 
 ### DWS
 
-DWS 层按照不同业务主题对 Session 数据进行汇总。
+主要主题汇总表：
 
-主要包括：
-
-```text
+``` text
 dws_monthly_conversion
 dws_visitor_type_conversion
 dws_traffic_type_conversion
@@ -214,23 +143,11 @@ dws_proxy_funnel
 dws_session_segment_summary
 ```
 
-对应分析：
-
-* 月度经营趋势
-* 新老访客转化
-* 流量渠道表现
-* 商品浏览深度
-* 商品停留时长
-* 代理行为漏斗
-* Session 行为分层
-
 ### ADS
 
-ADS 面向 Dashboard 和业务应用输出最终指标。
+面向 Dashboard 输出：
 
-主要包括：
-
-```text
+``` text
 ads_core_kpi
 ads_monthly_dashboard
 ads_channel_priority
@@ -238,624 +155,397 @@ ads_high_potential_rule
 ads_high_potential_profile
 ```
 
-用于支持：
+------------------------------------------------------------------------
 
-```text
-经营 KPI
-+
-月度趋势
-+
-渠道优先级
-+
-高潜 Session 分析
-+
-Power BI Dashboard
+## 5. 分析流程
+
+``` text
+数据理解 → 数据质量检查 → ODS/DWD
+→ SQL 业务分析 → Python EDA → 交叉分析
+→ 相关性分析 → Session 分层 → 高潜识别
+→ Logistic Regression → Random Forest
+→ 规则法 × 模型法 → DWS/ADS → Power BI
 ```
 
----
+------------------------------------------------------------------------
 
-## 5. 项目分析流程
+## 6. 核心分析结果
 
-整个项目主要分为以下阶段：
+### 6.1 整体经营情况
 
-```text
-数据理解
-   ↓
-数据质量检查
-   ↓
-ODS → DWD
-   ↓
-SQL业务分析
-   ↓
-Python EDA
-   ↓
-交叉分析
-   ↓
-相关性分析
-   ↓
-Session分层
-   ↓
-高潜Session识别
-   ↓
-Logistic Regression
-   ↓
-Random Forest
-   ↓
-规则法 × 模型法
-   ↓
-DWS / ADS
-   ↓
-Power BI Dashboard
-   ↓
-业务结论与建议
-```
-
----
-
-# 6. 核心分析结果
-
-## 6.1 整体经营情况
-
-数据集中共有：
-
-```text
+``` text
 Total Sessions       = 12,330
 Purchase Sessions    = 1,908
 Conversion Rate      ≈ 15.47%
 ```
 
-即大约每 100 个 Session 中有 15 个最终产生购买。
+约每 100 个 Session 中有 15 个最终产生购买。
 
----
+### 6.2 新访客与回访访客
 
-## 6.2 新访客与回访访客存在明显差异
+  VisitorType           Session   Purchase      CVR
+  ------------------- --------- ---------- --------
+  New Visitor             1,694        422   24.91%
+  Returning Visitor      10,551      1,470   13.93%
+  Other                      85         16   18.82%
 
-| VisitorType       | Session | Purchase |    CVR |
-| ----------------- | ------: | -------: | -----: |
-| New Visitor       |   1,694 |      422 | 24.91% |
-| Returning Visitor |  10,551 |    1,470 | 13.93% |
-| Other             |      85 |       16 | 18.82% |
+Returning Visitor 的 Session 数量更多、浏览更深，但单次 Session CVR 低于
+New Visitor。
 
-其中：
-```text
-New Visitor CVR       ≈ 24.91%
-Returning Visitor CVR ≈ 13.93%
+#### VisitorType × 商品浏览深度
+
+![VisitorType ×
+商品浏览深度](images/03/conversion_rate_by_product_depth_and_visitor_type.png)
+
+在多个商品浏览层级中，New Visitor CVR 仍高于 Returning Visitor。
+
+> VisitorType
+> 本身可能包含额外购买意向信息，新老访客的转化差异不能仅用浏览深度解释。
+
+### 6.3 商品浏览深度
+
+#### 购买 vs 未购买 Session 商品浏览差异
+
+![购买与未购买 Session 商品浏览差异](images/02/product_view.png)
+
+``` text
+购买 Session：平均 ProductRelated = 48.21，中位数 = 29
+未购买 Session：平均 ProductRelated = 28.71，中位数 = 16
 ```
 
-虽然 Returning Visitor：
-* Session 数量更多
-* 商品浏览更深
-* 商品页面停留时间更长
-* 贡献的 Purchase Session 更多
-但其单次 Session 转化率反而低于 New Visitor。
+按商品浏览次数分组：
 
-进一步进行：
-```text
-VisitorType × Product View Depth
-```
-交叉分析后发现，即使控制商品浏览深度，New Visitor 在多个浏览层级中的 CVR 仍然高于 Returning Visitor。
+  浏览次数     Session   Purchase      CVR
+  ---------- --------- ---------- --------
+  0--5           2,369        102    4.31%
+  6--10          1,804        185   10.25%
+  11--20         2,560        392   15.31%
+  21--50         3,445        685   19.88%
+  50+            2,152        544   25.28%
 
-### VisitorType × 商品浏览深度 
+#### 商品浏览深度 × CVR
 
-![VisitorType × 商品浏览深度](images/03/conversion_rate_by_product_depth_and_visitor_type.png) 
-从不同商品浏览深度进一步比较可以发现，在多个浏览层级中，New Visitor 的 Session CVR 仍然高于 Returning Visitor。
+![商品浏览深度与转化率](images/02/product_view_conversion.png)
 
-因此：
-> VisitorType 本身可能包含额外的购买意向信息，不能仅使用浏览深度解释新老访客之间的转化差异。
+CVR 从 0--5 次浏览组的 4.31% 持续提高至 50+ 组的 25.28%。
 
----
+> 商品浏览深度与购买意向存在明显正向关联，但属于相关关系，不能直接解释为因果关系。
 
-## 6.3 商品浏览深度与购买转化存在明显正向关联
+### 6.4 商品页面停留时间
 
-按照 `ProductRelated` 对 Session 进行分组：
+  停留时间       Session   Purchase      CVR
+  ------------ --------- ---------- --------
+  0--2 min         2,361         94    3.98%
+  2--5 min         1,807        133    7.36%
+  5--10 min        2,006        308   15.35%
+  10--20 min       2,376        482   20.29%
+  20+ min          3,780        891   23.57%
 
-| 商品浏览次数 | Session | Purchase |    CVR |
-| ------ | ------: | -------: | -----: |
-| 0–5    |   2,369 |      102 |  4.31% |
-| 6–10   |   1,804 |      185 | 10.25% |
-| 11–20  |   2,560 |      392 | 15.31% |
-| 21–50  |   3,445 |      685 | 19.88% |
-| 50+    |   2,152 |      544 | 25.28% |
+![商品停留时间与转化率](images/02/product_duration_group.png)
 
-可以看到：
+商品页面停留时长与购买转化呈较稳定的正向关系，从 0--2 分钟组的 3.98%
+上升至 20 分钟以上组的 23.57%。
 
-```text
-4.31%
-  ↓
-10.25%
-  ↓
-15.31%
-  ↓
-19.88%
-  ↓
-25.28%
-```
-随着商品浏览深度增加，Session CVR 整体持续提高。
+### 6.5 BounceRates / ExitRates
 
+``` text
+BounceRates
+未购买 Mean = 0.0253
+购买   Mean = 0.0051
 
-
-同时：
-```text
-购买 Session：
-平均商品页访问次数 = 48.21
-中位数             = 29
-
-未购买 Session：
-平均商品页访问次数 = 28.71
-中位数             = 16
-```
-说明购买 Session 整体表现出更深的商品浏览行为。
-
-> 商品浏览深度与购买意向存在明显正向关联，但该结果属于相关关系，不能直接解释为因果关系。
-
----
-
-## 6.4 商品页面停留时间与购买转化存在明显关系
-
-按照商品页面停留时间进行分组：
-
-| 商品页停留时间   | Session | Purchase |    CVR |
-| --------- | ------: | -------: | -----: |
-| 0–2 min   |   2,361 |       94 |  3.98% |
-| 2–5 min   |   1,807 |      133 |  7.36% |
-| 5–10 min  |   2,006 |      308 | 15.35% |
-| 10–20 min |   2,376 |      482 | 20.29% |
-| 20+ min   |   3,780 |      891 | 23.57% |
-
-转化率表现为：
-
-```text
-3.98%
- ↓
-7.36%
- ↓
-15.35%
- ↓
-20.29%
- ↓
-23.57%
+ExitRates
+未购买 Mean = 0.0474
+购买   Mean = 0.0196
 ```
 
-说明商品页面停留时长与购买行为存在较稳定的正向关系。
+购买 Session 整体具有更低的 BounceRates 和 ExitRates。
 
----
+### 6.6 PageValues 与相关性
 
-## 6.5 BounceRates / ExitRates 与购买结果存在明显差异
-
-### BounceRates
-
-```text
-未购买 Session Mean = 0.0253
-购买 Session Mean   = 0.0051
-```
-
-购买 Session 的平均 BounceRates 约为未购买 Session 的 20%。
-
-### ExitRates
-
-```text
-未购买 Session Mean = 0.0474
-购买 Session Mean   = 0.0196
-```
-
-整体来看：
-
-> 购买 Session 表现出更低的 BounceRates 和 ExitRates，说明更强的网站参与行为与最终购买结果存在明显关联。
-
----
-
-## 6.6 PageValues 是最重要的购买预测信号之一
-
-EDA 中：
-
-```text
+``` text
 未购买 Session PageValues Mean = 1.976
 购买 Session PageValues Mean   = 27.265
 ```
 
-相关性分析得到：
+Revenue 相关性：
 
-```text
-Revenue Correlation
+  Feature                     Correlation
+  ------------------------- -------------
+  PageValues                       +0.493
+  ProductRelated                   +0.159
+  ProductRelated_Duration          +0.152
+  BounceRates                      -0.151
+  ExitRates                        -0.207
 
-PageValues                 +0.493
-ProductRelated             +0.159
-ProductRelated_Duration    +0.152
-BounceRates                -0.151
-ExitRates                  -0.207
-```
+![核心行为变量相关性热力图](images/02/correlation_heatmap.png)
 
-在当前变量中，PageValues 与 Revenue 的线性相关性明显更强。
+PageValues 与 Revenue 的线性相关性明显强于其他核心行为变量。
 
-因此在建模阶段进一步进行了：
+> 相关性只能说明统计关联，不能直接证明因果关系。
 
-```text
-Model A：包含 PageValues
-Model B：不包含 PageValues
-```
+------------------------------------------------------------------------
 
-的 A/B 对比。
+## 7. 高潜 Session 分析
 
----
+由于数据没有真实 `user_id`，本项目严格使用 **High Potential
+Sessions**，而不是 High Potential Users。
 
-# 7. 高潜 Session 分析
+### 7.1 P75 规则
 
-## 7.1 为什么分析高潜 Session？
-
-仅分析已经购买的 Session 并不能直接形成运营机会。
-
-因此，本项目进一步关注：
-
-```text
-行为已经很深
-+
-表现出较强购买意向
-+
-最终没有购买
-```
-
-的 Session。
-
-由于原始数据没有真实 `user_id`，因此这里严格称为：
-
-> High Potential Sessions
-
-而不是 High Potential Users。
-
----
-
-## 7.2 P75 高浏览规则
-
-首先使用 `ProductRelated` 的数据分布确定浏览深度阈值：
-
-```text
+``` text
 ProductRelated P75 = 38
-```
 
-因此定义：
-
-```text
+High Potential:
 ProductRelated >= 38
-AND
-Revenue = False
+AND Revenue = False
 ```
 
-为规则法高潜未购买 Session。
+共识别：
 
-该规则识别出：
-
-```text
+``` text
 2,376 High Potential Sessions
 ```
 
-进一步分析发现，这些 Session 并不是快速跳出或低参与 Session。
+  指标                        High Potential   All Non-Purchase
+  ------------------------- ---------------- ------------------
+  BounceRates                       0.007614           0.025317
+  ExitRates                         0.021814           0.047378
+  PageValues                        4.182961           1.975998
+  ProductRelated_Duration        2941.962073        1069.987809
 
-相反，它们表现出：
+高潜 Session 商品页平均停留约 49 分钟，是全部未购买 Session 的约 2.75
+倍；PageValues 约为普通未购买 Session 的 2.1 倍，同时 BounceRates 和
+ExitRates 更低。
 
-```text
-更深的商品浏览
-+
-更长的商品停留时间
-+
-更低的 BounceRates
-+
-更低的 ExitRates
-+
-更高的 PageValues
-+
-最终仍未购买
+这说明该群体不是低兴趣快速流失
+Session，而是已经表现出较强参与度但最终没有完成购买的 Session。
+
+### 7.2 月份与渠道
+
+November 高潜未购买 Session 绝对数量最多，为 690；August 高潜率最高，为
+33.05%。月份分析因此需要同时观察高潜规模和高潜率。
+
+TrafficType 2 同时具有较大的高潜 Session
+规模和较高的高潜率。对于样本量很小的渠道，即使高潜率较高，也不能仅根据比例判断渠道质量。
+
+------------------------------------------------------------------------
+
+## 8. 购买预测模型
+
+### 8.1 Logistic Regression
+
+使用 Logistic Regression 作为可解释 Baseline，主要特征包括：
+
+``` text
+Administrative
+Administrative_Duration
+Informational
+Informational_Duration
+ProductRelated
+ProductRelated_Duration
+BounceRates
+ExitRates
+PageValues
+SpecialDay
 ```
 
-其中商品页面平均停留时间约为全部未购买 Session 的 **2.75 倍**。
+目标变量为 `Revenue`，训练/测试集按 80% / 20% 划分并使用 `stratify=y`。
 
-因此，高浏览未购买群体值得进一步区分，而不能简单视为普通流失流量。
+第一版 `StandardScaler + LogisticRegression(class_weight="balanced")` 的
+ROC-AUC 约为 0.8647。
 
----
+### 8.2 PageValues A/B 实验
 
-# 8. 购买预测模型
+为了验证 PageValues 对预测能力的影响：
 
-为了进一步识别单一浏览规则无法发现的购买倾向，本项目使用：
-
-```text
-Logistic Regression
-+
-Random Forest
+``` text
+Model A：包含 PageValues
+Model B：删除 PageValues
 ```
 
-进行轻量购买预测。
+  Model                  Accuracy   Precision   Recall       F1   ROC-AUC
+  -------------------- ---------- ----------- -------- -------- ---------
+  With PageValues          0.8763      0.7200   0.3298   0.4524    0.8695
+  Without PageValues       0.8443      0.4375   0.0183   0.0352    0.6679
 
-模型目标不是构建复杂机器学习系统，而是回答：
+![PageValues A/B 实验 ROC 曲线](images/03/roc_curve.png)
 
-> 多维 Session 行为特征能否帮助我们进一步识别高购买倾向 Session？
+加入 PageValues 后 ROC-AUC 从 0.6679 提高到 0.8695，提升约 0.2016。
 
----
+> 实际部署前需要确认 PageValues
+> 在预测时点是否已经可获得，避免潜在的数据泄漏。
 
-## 8.1 Logistic Regression
+### 8.3 Confusion Matrix
 
-Logistic Regression 作为可解释 Baseline。
+![Logistic Regression Confusion Matrix](images/03/confusion_matrix.png)
 
-同时为了验证模型是否过度依赖 `PageValues`，进行了两组实验：
+``` text
+TN：实际没买，模型也预测没买
+FP：实际没买，模型预测会买
+FN：实际买了，模型预测不买
+TP：实际买了，模型也预测会买
+```
 
-```text
-Model A
-包含 PageValues
+高潜识别场景需要特别关注 FN，因为 FN 越多，意味着遗漏的真实购买 Session
+越多。
 
-vs
+### 8.4 Logistic Regression ROC Curve
 
-Model B
-删除 PageValues
+![Logistic Regression ROC
+Curve](images/03/roc_curve_logistic_regression.png)
+
+Model A ROC-AUC 约为 0.869，说明模型对购买与未购买 Session
+具有较好的整体区分能力。
+
+### 8.5 Random Forest
+
+Random Forest ROC-AUC 约为 0.889，高于 Logistic Regression 约
+0.869，说明非线性关系和变量交互能够提供一定额外预测能力。
+
+  Feature                     Importance
+  ------------------------- ------------
+  PageValues                      0.4288
+  ExitRates                       0.1253
+  ProductRelated_Duration         0.1244
+  ProductRelated                  0.0869
+  BounceRates                     0.0704
+  Administrative_Duration         0.0678
+  Administrative                  0.0416
+  Informational_Duration          0.0282
+  Informational                   0.0172
+  SpecialDay                      0.0094
+
+![Random Forest Feature Importance](images/03/feature_importance.png)
+
+形成一致证据链：
+
+``` text
+EDA：PageValues 与 Revenue 相关性最强
+        ↓
+Logistic A/B：删除 PageValues 后性能明显下降
+        ↓
+Random Forest：PageValues Feature Importance 排名第一
+```
+
+------------------------------------------------------------------------
+
+## 9. 规则法 × 模型法高潜识别
+
+模型购买倾向评分采用 P90：
+
+``` text
+P90 = 0.833762
+```
+
+模型法定义：
+
+``` text
+PurchaseProbability >= P90
+AND Revenue = False
 ```
 
 结果：
 
-```text
-ROC-AUC
-
-With PageValues       ≈ 0.8695
-Without PageValues    ≈ 0.6679
+``` text
+规则法高潜：2,376
+模型法高潜：356
+重合 Both：188
+Rule Only：2,188
+Model Only：168
 ```
-
-差异约：
-
-```text
-+0.2016
-```
-
-说明 PageValues 对当前数据集中的购买预测具有非常重要的贡献。
-
----
-
-## 8.2 Random Forest
-
-Random Forest 用于补充验证：
-
-```text
-非线性关系
-+
-变量交互
-+
-Feature Importance
-```
-
-主要 Feature Importance：
-
-| Feature                 | Importance |
-| ----------------------- | ---------: |
-| PageValues              |     0.4288 |
-| ExitRates               |     0.1253 |
-| ProductRelated_Duration |     0.1244 |
-| ProductRelated          |     0.0869 |
-| BounceRates             |     0.0704 |
-
-PageValues 再次排名第一。
-
-因此形成了一条相对完整的证据链：
-
-```text
-EDA
-↓
-PageValues 与 Revenue 相关性最高
-
-Logistic Regression A/B
-↓
-删除 PageValues 后 ROC-AUC 明显下降
-
-Random Forest
-↓
-PageValues Feature Importance 排名第一
-```
-
----
-
-# 9. 规则法 × 模型法高潜识别
-
-单一规则存在明显局限：
-
-```text
-浏览很多
-≠
-一定具有最高购买倾向
-```
-
-因此进一步将：
-
-```text
-P75浏览规则
-+
-模型Top 10%购买倾向
-```
-
-进行交叉。
-
-最终形成：
-
-```text
-Rule Only
-Model Only
-Both
-Neither
-```
-
-其中：
 
 ### Rule Only
 
-```text
-2,188 Sessions
-```
-
-表现出较深浏览行为，但模型综合购买倾向没有进入 Top 10%。
+2,188 个 Session：浏览很深，但综合模型购买倾向未进入 Top 10%。
 
 ### Model Only
 
-```text
-168 Sessions
-```
+168 个 Session，平均商品浏览约 23.34 次，但：
 
-平均商品浏览仅约：
-
-```text
-23.34
-```
-
-但：
-
-```text
+``` text
 PageValues ≈ 43.22
-模型购买倾向 ≈ 0.946
+购买倾向评分 ≈ 0.946
 ```
 
-说明模型能够识别一部分无法通过“高浏览”单一规则发现的潜在购买 Session。
+说明模型能够补充单一高浏览规则遗漏的潜在购买 Session。
 
-### Both
+### Both / Core High Potential
 
-```text
-188 Sessions
-```
+188 个 Session 同时满足：
 
-同时满足：
-
-```text
-P75高浏览
+``` text
+P75 高浏览
 +
 Model Top 10%
 +
 最终未购买
 ```
 
-定义为：
+该群体平均：
 
-> Core High Potential Sessions
-
-这一群体平均：
-
-```text
+``` text
 ProductRelated          ≈ 130.80
 ProductRelated_Duration ≈ 88.2 min
 Purchase Propensity     ≈ 0.935
 ```
 
-同时具有：
+因此将其定义为 **Core High Potential Sessions**。
 
-```text
-极深商品浏览
-+
-超长停留
-+
-低BounceRates
-+
-低ExitRates
-+
-较高PageValues
-+
-高模型购买倾向
-+
-最终未购买
+------------------------------------------------------------------------
+
+## 10. 模型阈值与业务目标
+
+模型分类不能机械使用默认 `threshold = 0.5`。
+
+![分类阈值与 Precision Recall F1](images/03/precision_recall_f1.png)
+
+当前候选阈值中：
+
+``` text
+Threshold = 0.2
+F1        ≈ 0.5959
+Recall    ≈ 60.99%
+Precision ≈ 58.25%
 ```
 
-因此，这 188 个 Session 是当前数据下最值得进一步研究的核心高潜群体。
+相比默认 0.5：
 
----
-
-# 10. 模型阈值与业务目标
-
-分类模型不能机械使用：
-
-```text
-threshold = 0.5
+``` text
+Recall:    32.98% → 60.99%
+Precision: 72.00% → 58.25%
 ```
 
-本项目进一步比较不同分类阈值。
+-   **低成本触达**：Email、Push、站内推荐，可适当降低阈值提高 Recall。
+-   **高成本触达**：优惠券、人工销售等，应更加关注 Precision。
 
-当前测试中：
+> 分类 Threshold 与 P90
+> 高潜阈值不是同一概念。前者用于将概率转换为分类结果，后者用于从实际未购买
+> Session 中筛选最值得运营关注的 Top 10%。
 
-```text
-threshold = 0.2
-```
+------------------------------------------------------------------------
 
-取得较高 F1，并将 Recall 从约：
+## 11. Session 运营分层
 
-```text
-32.98%
-```
+  优先级   Session                         数量 建议
+  -------- ---------------------------- ------- --------------------------------------------
+  P1       Core High Potential / Both       188 优先分析转化阻碍，重点触达
+  P2       Model Only                       168 模型高意向群体，精准触达
+  P3       Rule Only                      2,188 高参与但购买信号较弱，低成本运营或继续观察
 
-提高至：
+不应把所有"浏览很多但没有购买"的 Session
+视为同样高价值，应结合浏览、停留、退出、PageValues
+和模型评分进行优先级划分。
 
-```text
-60.99%
-```
+------------------------------------------------------------------------
 
-因此模型阈值应该根据运营成本进行选择。
+## 12. Proxy Funnel
 
-### 低成本触达
+原始数据为 Session
+级聚合数据，没有完整事件时间序列，因此没有人为构造标准电商漏斗。
 
-例如：
+本项目使用代理行为漏斗：
 
-```text
-Email
-Push
-站内推荐
-```
-
-可以适当降低阈值，提高 Recall，覆盖更多潜在购买 Session。
-
-### 高成本触达
-
-例如：
-
-```text
-优惠券
-人工销售
-高成本营销资源
-```
-
-则应该更加关注 Precision，避免大量无效触达。
-
----
-
-# 11. Session 运营分层
-
-结合规则法与模型法，可以进一步建立三级未购买 Session 运营体系：
-
-| 优先级 | Session                    |    数量 | 建议                      |
-| --- | -------------------------- | ----: | ----------------------- |
-| P1  | Core High Potential / Both |   188 | 优先分析转化阻碍，重点触达           |
-| P2  | Model Only                 |   168 | 模型高意向群体，精准触达            |
-| P3  | Rule Only                  | 2,188 | 高参与但购买信号相对较弱，低成本运营或继续观察 |
-
-核心思想是：
-
-> 不应该把所有“浏览很多但没有购买”的 Session 看作同样高价值，而应该结合浏览、停留、退出、PageValues 和模型评分等多维信息进一步确定优先级。
-
----
-
-# 12. Proxy Funnel
-
-由于原始数据是 Session 级聚合数据，没有：
-
-```text
-view
-↓
-product_detail
-↓
-add_cart
-↓
-checkout
-↓
-payment
-↓
-purchase
-```
-
-这样的完整事件时间序列，因此项目没有人为构造不存在的标准电商漏斗。
-
-而是根据 Session 行为特征构建：
-
-> Proxy Funnel / 代理行为漏斗
-
-例如：
-
-```text
+``` text
 All Sessions
 ↓
 Product View
@@ -865,176 +555,99 @@ Deep Product View
 Purchase
 ```
 
-因此，该漏斗用于辅助观察行为深度变化，而不等同于真实埋点事件漏斗。
+> Proxy Funnel 用于辅助观察行为深度变化，不等同于真实的 View → Add Cart
+> → Checkout → Payment → Purchase 事件漏斗。
 
-如果未来获得事件级数据，可以进一步构建标准：
+------------------------------------------------------------------------
 
-```text
-View
-→ Product Detail
-→ Add Cart
-→ Checkout
-→ Payment
-→ Purchase
+## 13. Power BI Dashboard
+
+经过验证的指标沉淀到 DWS / ADS 后，由 Power BI
+消费。由于报表页面较长，README 将每页拆为关键区域截图。
+
+> 将实际截图放到 `images/dashboard/`。如果文件名不同，请修改下列路径。
+
+### Page 1 --- Executive Overview
+
+主要展示 Total Sessions、Purchase Sessions、CVR、High Potential
+Sessions、月度趋势、VisitorType CVR 和 Product View Depth CVR。
+
+![Executive Overview - KPI and Trend](images/dashboard/overview_01.png)
+
+![Executive Overview - Conversion
+Analysis](images/dashboard/overview_02.png)
+
+### Page 2 --- Behavior & Conversion
+
+主要展示
+ProductRelated、ProductRelated_Duration、BounceRates、ExitRates、PageValues、VisitorType
+与 Session Segment。
+
+![Behavior and Conversion -
+Engagement](images/dashboard/behavior_01.png)
+
+![Behavior and Conversion - Conversion
+Signals](images/dashboard/behavior_02.png)
+
+### Page 3 --- High Potential Sessions
+
+主要展示 High Potential Volume、High Potential
+Rate、月份、TrafficType、高潜画像与 Session Segment。
+
+![High Potential Sessions -
+Overview](images/dashboard/high_potential_01.png)
+
+![High Potential Sessions - Profile and
+Channel](images/dashboard/high_potential_02.png)
+
+------------------------------------------------------------------------
+
+## 14. 核心业务结论
+
+1.  商品浏览深度与购买转化存在明显正向关联，CVR 从 4.31% 提升至 25.28%。
+2.  商品页面停留时间与购买转化呈稳定正向关系，CVR 从 3.98% 提升至
+    23.57%。
+3.  购买 Session 整体具有更低的 BounceRates 和 ExitRates。
+4.  New Visitor CVR 约 24.91%，Returning Visitor 约
+    13.93%，且差异不能仅由浏览深度解释。
+5.  PageValues 是当前数据最重要的购买预测信号之一。
+6.  单一高浏览规则无法完整识别高购买倾向 Session，模型补充识别出 168 个
+    Model Only Session。
+7.  规则法与模型法共同识别出的 188 个 Both Session 是最值得关注的 Core
+    High Potential Sessions。
+8.  模型分类阈值应服务于业务目标：低成本触达更关注
+    Recall，高成本触达更关注 Precision。
+9.  当前结论属于相关关系与预测关系，不能直接证明最终未购买的因果原因。
+
+------------------------------------------------------------------------
+
+## 15. 业务建议
+
+### 分层运营
+
+使用 P1 / P2 / P3 体系，将分析和运营资源优先投入 Core High Potential
+Sessions。
+
+### 补充真实转化事件
+
+未来建议增加：
+
+``` text
+Add to Cart
+Checkout
+Payment
+Coupon / Promotion
+Price
+Inventory
+Product
+Category
 ```
 
-漏斗。
+进一步定位商品、价格、优惠、库存、支付和页面体验等真实转化阻碍。
 
----
+### 渠道评估同时考虑规模与效率
 
-# 13. Power BI Dashboard
-
-最终将经过验证的指标沉淀到 DWS / ADS，并使用 Power BI 构建业务 Dashboard。
-
-Dashboard 主要设计为三个页面。
-
-## Page 1 — Executive Overview
-
-回答：
-
-> 平台整体经营与购买转化情况如何？
-
-主要展示：
-
-* Total Sessions
-* Purchase Sessions
-* Conversion Rate
-* High Potential Sessions
-* Monthly Session Trend
-* Monthly CVR
-* VisitorType CVR
-* Product View Depth CVR
-
-## Page 2 — Behavior & Conversion
-
-回答：
-
-> 哪些 Session 行为与购买转化存在明显关系？
-
-主要关注：
-
-* ProductRelated
-* ProductRelated_Duration
-* BounceRates
-* ExitRates
-* PageValues
-* VisitorType
-* Session Segment
-
-## Page 3 — High Potential Sessions
-
-回答：
-
-> 哪些未购买 Session 最值得业务进一步关注？
-
-主要展示：
-
-* High Potential Session Volume
-* High Potential Rate
-* Month Distribution
-* TrafficType Distribution
-* High Potential Profile
-* Session Segment
-
-> 可在这里加入最终 Power BI Dashboard 截图。
-
-例如：
-
-```markdown
-![Executive Overview](images/dashboard/executive_overview.png)
-
-![Behavior & Conversion](images/dashboard/behavior_conversion.png)
-
-![High Potential Sessions](images/dashboard/high_potential_sessions.png)
-```
-
-请根据实际截图文件名修改路径。
-
----
-
-# 14. 核心业务结论
-
-本项目最终得到以下主要结论：
-
-1. **商品浏览深度与购买转化存在明显正向关联。** CVR 从 0–5 次浏览组的 4.31% 提升至 50+ 浏览组的 25.28%。
-
-2. **商品页面停留时间与购买转化同样存在较稳定的正向关系。** CVR 从 0–2 分钟组的 3.98% 提升至 20 分钟以上组的 23.57%。
-
-3. **购买 Session 整体具有更低的 BounceRates 和 ExitRates。** 网站参与程度与最终购买结果存在明显关联。
-
-4. **New Visitor 与 Returning Visitor 存在明显转化差异。** New Visitor CVR 约为 24.91%，Returning Visitor 约为 13.93%，且该差异不能仅通过浏览深度解释。
-
-5. **PageValues 是当前数据中最重要的购买预测信号之一。** 删除该变量后 Logistic Regression ROC-AUC 从约 0.8695 降至 0.6679；Random Forest 中其 Feature Importance 同样排名第一。
-
-6. **单一浏览规则无法完整识别高购买倾向 Session。** 模型识别出了 168 个 Model Only Session，这些 Session 浏览次数不高，但 PageValues 和综合购买倾向明显较高。
-
-7. **规则法和模型法共同识别出的 188 个 Both Session 是当前最值得关注的 Core High Potential Sessions。**
-
-8. **模型分类阈值应服务于业务目标。** 低成本触达更关注 Recall，高成本触达则应更加重视 Precision。
-
----
-
-# 15. 业务建议
-
-## 15.1 建立分层运营机制
-
-针对未购买 Session，不建议使用统一运营策略。
-
-可以根据：
-
-```text
-规则高潜
-+
-模型高潜
-```
-
-建立 P1 / P2 / P3 分层。
-
-优先将分析和运营资源投入 Core High Potential Sessions。
-
-## 15.2 深挖 Core High Potential 的真实流失原因
-
-当前数据能够发现：
-
-> 哪些 Session 值得关注。
-
-但无法准确回答：
-
-> 为什么它们最终没有购买。
-
-建议未来补充：
-
-* Add to Cart
-* Checkout
-* Payment
-* Coupon / Promotion
-* Price
-* Inventory
-* Product
-* Category
-
-等事件和业务数据。
-
-进一步定位：
-
-```text
-商品问题
-价格问题
-优惠问题
-库存问题
-支付问题
-页面体验问题
-```
-
-等真实转化阻碍。
-
-## 15.3 渠道评估同时考虑规模与效率
-
-渠道不能只看 CVR，也不能只看 Session 数。
-
-建议综合考虑：
-
-```text
+``` text
 Session Volume
 +
 Conversion Rate
@@ -1048,385 +661,208 @@ Marketing Cost
 Expected Revenue
 ```
 
-再进行营销资源分配。
+### 根据触达成本选择模型阈值
 
-## 15.4 根据触达成本调整模型阈值
+低成本触达可提高 Recall；高成本触达应更加关注 Precision。
 
-对于 Email、Push 等低成本触达，可以提高 Recall。
+------------------------------------------------------------------------
 
-对于优惠券、人工销售等高成本触达，应更加关注 Precision。
-
----
-
-# 16. 数据质量与指标一致性
-
-项目不仅进行了分析，也对数据链路进行了质量校验。
-
-主要包括：
+## 16. 数据质量与指标一致性
 
 ### ODS
 
-* 数据量检查
-* 空值检查
-* 重复值检查
-* 字段范围检查
-* 类别值检查
+-   数据量检查
+-   空值检查
+-   重复值检查
+-   字段范围检查
+-   类别值检查
 
 ### DWD
 
-* Session ID 唯一性
-* 页面访问次数非负
-* Duration 非负
-* 比例字段范围检查
-* Month 标准化检查
-* Revenue → is_purchase 映射检查
+-   Session ID 唯一性
+-   页面访问次数非负
+-   Duration 非负
+-   比例字段范围检查
+-   Month 标准化
+-   Revenue → is_purchase 映射检查
 
-### DWD → DWS
+### DWD → DWS → ADS
 
 验证：
 
-```text
-SUM(DWS session_cnt)
-=
-DWD Total Sessions
+``` text
+SUM(DWS session_cnt) = DWD Total Sessions
+SUM(DWS purchase_cnt) = DWD Purchase Sessions
 ```
 
-以及：
+并继续进行 DWS → ADS 指标对账，保证 Dashboard 与底层数据口径一致。
 
-```text
-SUM(DWS purchase_cnt)
-=
-DWD Purchase Sessions
-```
+------------------------------------------------------------------------
 
-### DWS → ADS
+## 17. 项目目录
 
-继续进行指标对账，保证 Dashboard 使用的数据与底层数据口径一致。
-
-通过：
-
-```text
-数据质量检查
-+
-层间对账
-+
-统一指标定义
-```
-
-减少因为多层加工造成的指标口径不一致。
-
----
-
-# 17. 项目目录
-
-```text
+``` text
 ecommerce-user-analysis/
-│
 ├── data/
 │   ├── raw/
-│   │   └── online_shoppers_intention.csv
 │   └── processed/
-│
 ├── sql/
-│   ├── 01_create_database.sql
-│   ├── 02_data_quality.sql
-│   ├── 03_create_dwd.sql
-│   ├── 04_dwd_quality.sql
-│   ├── 05_business_analysis.sql
-│   └── 06_dws_ads_etl.sql
-│
 ├── python/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_business_eda.ipynb
-│   ├── 03_user_segmentation_model.ipynb
-│   ├── 04_dws_ads_etl.ipynb
-│   └── 05_powerbi_dashboard_prep.ipynb
-│
 ├── docs/
 │   ├── data_dictionary.md
 │   └── analysis_report.md
-│
 ├── dashboard/
-│   └── [Power BI 文件]
-│
 ├── images/
 │   ├── 02/
+│   │   ├── product_view.png
+│   │   ├── product_view_conversion.png
+│   │   ├── product_duration_group.png
+│   │   └── correlation_heatmap.png
 │   ├── 03/
+│   │   ├── conversion_rate_by_product_depth_and_visitor_type.png
+│   │   ├── roc_curve.png
+│   │   ├── confusion_matrix.png
+│   │   ├── roc_curve_logistic_regression.png
+│   │   ├── precision_recall_f1.png
+│   │   └── feature_importance.png
 │   └── dashboard/
-│
+│       ├── overview_01.png
+│       ├── overview_02.png
+│       ├── behavior_01.png
+│       ├── behavior_02.png
+│       ├── high_potential_01.png
+│       └── high_potential_02.png
 └── README.md
 ```
 
-> 如果你的实际 Notebook 或 Power BI 文件名不同，请按照本地项目目录修改。
+> SQL、Notebook 和 Power BI 的具体文件名请以本地项目实际目录为准。
 
----
+------------------------------------------------------------------------
 
-# 18. 如何运行项目
+## 18. 如何运行
 
-## Step 1：准备 MySQL
+### Step 1：准备 MySQL
 
-创建数据库：
-
-```sql
+``` sql
 CREATE DATABASE ecommerce_analysis;
 ```
 
-并完成原始 CSV 数据导入。
+导入原始 CSV 数据。
 
----
+### Step 2：执行 SQL
 
-## Step 2：执行 SQL
+按项目 `sql/` 目录中的建库、质量检查、DWD、业务分析以及 DWS/ADS ETL
+脚本顺序执行。
 
-按照顺序运行：
+### Step 3：运行 Python Notebook
 
-```text
-01_create_database.sql
-        ↓
-02_data_quality.sql
-        ↓
-03_create_dwd.sql
-        ↓
-04_dwd_quality.sql
-        ↓
-05_business_analysis.sql
-        ↓
-06_dws_ads_etl.sql
-```
+按数据探索 → 业务 EDA → Session 分层/模型 → DWS/ADS → Power BI
+数据准备的顺序运行。
 
-完成：
+每个 Notebook 应独立导包、读取数据并建立数据库连接，不依赖前一个
+Notebook 的内存变量。
 
-```text
-ODS
-↓
-DWD
-↓
-DWS
-↓
-ADS
-```
-
-的数据处理链路。
-
----
-
-## Step 3：运行 Python Notebook
-
-建议按照：
-
-```text
-01_data_exploration.ipynb
-        ↓
-02_business_eda.ipynb
-        ↓
-03_user_segmentation_model.ipynb
-        ↓
-04_dws_ads_etl.ipynb
-        ↓
-05_powerbi_dashboard_prep.ipynb
-```
-
-依次运行。
-
-每个 Notebook 均按照独立运行方式设计，需要重新执行对应的：
-
-```python
-import ...
-```
-
-以及数据读取、数据库连接等初始化代码，不依赖前一个 Notebook 的内存变量。
-
----
-
-## Step 4：连接 Power BI
-
-Power BI 优先读取 ADS / Dashboard 准备数据，而不是重新从原始 CSV 计算全部指标。
+### Step 4：Power BI
 
 推荐链路：
 
-```text
-MySQL
- ↓
-DWS / ADS
- ↓
-Power BI
- ↓
-Dashboard
+``` text
+MySQL → DWS / ADS → Power BI → Dashboard
 ```
 
----
+Power BI 优先消费经过验证的指标层，而不是重新从原始 CSV 计算全部指标。
 
-# 19. 项目亮点
+------------------------------------------------------------------------
 
-### 1. 完整数据分析链路
+## 19. 项目亮点
 
-项目不是单纯使用 Pandas 画图，而是完成：
+-   **完整分析链路：** 数据导入 → 数据质量 → 数仓分层 → SQL → Python EDA
+    → 模型 → DWS/ADS → Power BI。
+-   **SQL / Python / BI 分工明确：** SQL 负责数据处理和聚合，Python 负责
+    EDA 与建模，Power BI 负责业务展示。
+-   **同时关注规模与效率：** 不只看 Session Count，也比较 Purchase
+    Count、CVR、High Potential Rate。
+-   **规则法 × 模型法：** P75 业务规则与模型 Top 10% 购买倾向结合。
+-   **强调口径严谨性：** Session ≠ User、相关性 ≠ 因果、Proxy Funnel ≠
+    Event Funnel、Prediction Score ≠ 真实购买概率。
+-   **分析与数据开发结合：** 将验证后的指标沉淀到 ODS → DWD → DWS →
+    ADS。
 
-```text
-数据导入
-→ 数据质量
-→ 数仓分层
-→ SQL分析
-→ Python EDA
-→ 用户分层
-→ 预测模型
-→ DWS / ADS
-→ Power BI
+------------------------------------------------------------------------
+
+## 20. 项目局限性
+
+1.  数据粒度是 Session，不是独立 User。
+2.  缺少 `user_id`，无法识别同一用户的多次访问。
+3.  缺少完整事件时间序列，无法构建标准电商事件漏斗。
+4.  缺少 Add to Cart、Checkout、Payment 等关键事件。
+5.  缺少价格、优惠、库存、物流等业务变量。
+6.  PageValues
+    对模型贡献很大，实际部署前需确认预测时点是否可获得，避免数据泄漏。
+7.  `predict_proba()`
+    在当前项目主要作为购买倾向评分，不应直接解释为经过校准的真实购买概率。
+8.  当前分析主要发现相关关系与预测关系，不能直接证明因果关系。
+
+------------------------------------------------------------------------
+
+## 21. 后续优化
+
+``` text
+事件级行为数据
+→ 标准电商漏斗
+→ 用户级行为宽表
+→ RFM / 用户生命周期
+→ 商品 / 品类分析
+→ 营销归因
+→ 模型评分落库
+→ 定时 ETL
+→ Power BI 自动刷新
 ```
 
-完整流程。
+还可以进一步增加：
 
-### 2. SQL 与 Python 分工明确
+-   增量 ETL
+-   数据质量监控
+-   Airflow / DolphinScheduler
+-   Out-of-Fold Prediction
+-   Probability Calibration
+-   SHAP
+-   A/B Test
+-   营销 ROI 分析
 
-```text
-SQL
-→ 数据处理、指标计算、业务聚合
+------------------------------------------------------------------------
 
-Python
-→ EDA、分布分析、交叉验证、建模
+## 22. 项目总结
 
-Power BI
-→ 指标展示与业务监控
-```
+本项目围绕"为什么大量 Session 没有最终完成购买"这一业务问题，完成：
 
-### 3. 同时关注规模与效率
-
-分析中不只比较：
-
-```text
-Session Count
-```
-
-也同时比较：
-
-```text
-Purchase Count
-Conversion Rate
-High Potential Rate
-```
-
-避免单一指标造成错误判断。
-
-### 4. 规则法与模型法结合
-
-不仅使用：
-
-```text
-ProductRelated >= P75
-```
-
-这样的业务规则，也使用机器学习购买倾向评分补充识别单一规则遗漏的 Session。
-
-### 5. 强调数据口径与严谨性
-
-项目中明确区分：
-
-```text
-Session ≠ User
-相关性 ≠ 因果关系
-Proxy Funnel ≠ Event Funnel
-Prediction Score ≠ 真实购买概率
-```
-
-避免为了项目展示而过度解释数据。
-
-### 6. 数据分析与数据开发结合
-
-通过：
-
-```text
-ODS
-→ DWD
-→ DWS
-→ ADS
-```
-
-将分析过程中验证过的指标进一步工程化，为 Power BI 提供稳定的数据源。
-
----
-
-# 20. 项目局限性
-
-本项目仍存在以下限制：
-
-1. 数据粒度是 Session，不是独立 User，因此无法进行真正的用户生命周期分析。
-2. 数据缺少 `user_id`，无法识别同一用户的多次访问。
-3. 数据缺少完整事件时间序列，因此无法构建标准电商事件漏斗。
-4. 缺少 Add to Cart、Checkout、Payment 等关键转化事件。
-5. 缺少商品价格、优惠、库存、物流等业务变量。
-6. PageValues 对模型贡献较大，实际部署前需要确认该字段在预测时点是否已经可获取，避免数据泄漏风险。
-7. `predict_proba()` 在当前项目中主要作为购买倾向评分，不应直接解释为经过校准的真实购买概率。
-8. 当前分析主要用于发现相关关系和预测关系，不能直接证明因果关系。
-
----
-
-# 21. 后续优化方向
-
-未来可以进一步升级：
-
-```text
-事件级用户行为数据
-        ↓
-标准电商漏斗
-        ↓
-用户级行为宽表
-        ↓
-RFM / 用户生命周期
-        ↓
-商品 / 品类分析
-        ↓
-优惠券 / 营销归因
-        ↓
-模型评分落库
-        ↓
-定时 ETL
-        ↓
-Power BI 自动刷新
-```
-
-同时可以进一步增加：
-
-* Airflow / DolphinScheduler 调度
-* 增量 ETL
-* 数据分区
-* 数据质量监控
-* 模型评分表
-* Out-of-Fold Prediction
-* Probability Calibration
-* SHAP 模型解释
-* A/B Test
-* 营销 ROI 分析
-
----
-
-# 22. 项目总结
-
-本项目围绕“为什么大量 Session 没有最终完成购买”这一业务问题，从原始用户行为数据出发，完成了：
-
-```text
+``` text
 数据处理
 +
-SQL业务分析
+SQL 业务分析
 +
 Python EDA
 +
-用户行为分层
+Session 行为分层
 +
-高潜Session识别
+高潜 Session 识别
 +
 购买倾向预测
 +
-DWS / ADS指标沉淀
+DWS / ADS 指标沉淀
 +
 Power BI Dashboard
 ```
 
-分析结果显示，商品浏览深度、商品页面停留时间、BounceRates、ExitRates、PageValues 以及 VisitorType 均与购买行为表现出不同程度的关联。
+商品浏览深度、商品页面停留时间、BounceRates、ExitRates、PageValues 和
+VisitorType 均与购买行为表现出不同程度的关联。
 
-在此基础上，项目进一步将 P75 高浏览规则与模型 Top 10% 购买倾向进行交叉，识别出 **188 个 Core High Potential Sessions**，用于模拟更加精细化的运营优先级划分。
+进一步将 P75 高浏览规则与模型 Top 10% 购买倾向交叉，识别出 **188 个 Core
+High Potential Sessions**，用于模拟更精细的运营优先级划分。
 
-整个项目重点不仅是“分析数据”，还尝试完成以下的的完整数据分析闭环：
+最终形成：
 
-```text
+``` text
 发现问题
 ↓
 分析问题
@@ -1439,9 +875,7 @@ Power BI Dashboard
 ↓
 沉淀数据层
 ↓
-Dashboard展示
+Dashboard 展示
 ↓
 支持业务决策
 ```
-
-
