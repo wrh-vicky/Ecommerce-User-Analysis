@@ -329,6 +329,10 @@ VisitorType × Product View Depth
 ```
 随着商品浏览深度增加，Session CVR整体持续提高。
 
+![购买与未购买Session商品浏览差异](images/02/product_view.png)
+
+从商品浏览次数分布可以看到，购买Session整体表现出更深的商品浏览行为。
+
 同时：
 ```text
 购买Session：
@@ -340,6 +344,8 @@ VisitorType × Product View Depth
 中位数             = 16
 ```
 说明购买Session整体表现出更深的商品浏览行为。
+
+![商品浏览深度与转化率](images/02/product_view_conversion.png)
 
 > 商品浏览深度与购买意向存在明显正向关联，但该结果属于相关关系，不能直接解释为因果关系。
 
@@ -356,6 +362,9 @@ VisitorType × Product View Depth
 | 5–10 min  |   2,006 |      308 | 15.35% |
 | 10–20 min |   2,376 |      482 | 20.29% |
 | 20+ min   |   3,780 |      891 | 23.57% |
+
+![商品停留时间与转化率](images/02/product_duration_group.png)
+随着商品页面停留时间增加，Session CVR整体呈上升趋势：
 
 转化率表现为：
 ```text
@@ -415,6 +424,18 @@ BounceRates                -0.151
 ExitRates                  -0.207
 ```
 在当前变量中，PageValues与Revenue的线性相关性明显更强。
+
+![核心行为变量相关性热力图](images/02/correlation_heatmap.png)
+
+相关性分析显示： 
+- PageValues与Revenue的相关系数约为+0.493；
+- ProductRelated与Revenue呈弱正相关；
+- ProductRelated_Duration与Revenue呈弱正相关；
+- BounceRates与Revenue呈负相关；
+- ExitRates与Revenue呈负相关。
+- 其中PageValues与购买结果的线性相关性明显强于其他几个核心行为变量。
+
+> 相关性只能说明统计关联，不能直接解释为因果关系。
 
 因此在建模阶段进一步进行了的A/B对比:
 
@@ -511,13 +532,15 @@ With PageValues       ≈ 0.8695
 Without PageValues    ≈ 0.6679
 ```
 
-差异约：
+![PageValues A/B实验ROC曲线](images/03/roc_curve.png)
 
-```text
-+0.2016
-```
+在保持训练集、测试集、算法及其他特征一致的情况下： 
+- 包含PageValues：ROC-AUC ≈ 0.8695
+- 删除PageValues：ROC-AUC ≈ 0.6679
+- ROC-AUC差异：≈ 0.2016
+- 说明当前模型的购买区分能力明显依赖PageValues。
 
-说明PageValues对当前数据集中的购买预测具有非常重要的贡献。
+同时需要注意，在实际业务部署前需要确认 PageValues 在预测发生时是否已经可获得，避免潜在的数据泄漏问题。
 
 ---
 
