@@ -89,12 +89,6 @@ Power BI Dashboard
 | Weekend                 | 是否周末              |
 | Revenue                 | 本次 Session 是否最终购买 |
 
-更完整的字段说明见：
-
-```text
-docs/data_dictionary.md
-```
-
 ---
 
 ## 3. 技术栈
