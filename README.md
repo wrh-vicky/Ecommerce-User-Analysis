@@ -5,23 +5,18 @@
 
 ### Page 1 — Executive Overview
 
-### Page 2 — Behavior & Conversion
-
-### Page 3 — High Potential Sessions
-
-> 可在这里加入最终Power BI Dashboard截图。
-
-例如：
-
-```markdown
 ![Executive Overview](images/dashboard/executive_overview.png)
+
+### Page 2 — Behavior & Conversion
 
 ![Behavior & Conversion](images/dashboard/behavior_conversion.png)
 
-![High Potential Sessions](images/dashboard/high_potential_sessions.png)
-```
+### Page 3 — High Potential Sessions
 
-请根据实际截图文件名修改路径。
+![High Potential Sessions](images/dashboard/high_potential_sessions.png)
+
+---
+
 ## 1. 项目简介
 
 SmartBuy是一个模拟电商平台。
@@ -299,7 +294,9 @@ Returning Visitor CVR ≈ 13.93%
 ```text
 VisitorType × Product View Depth
 ```
-交叉分析后发现，即使控制商品浏览深度，New Visitor 在多个浏览层级中的 CVR 仍然高于 Returning Visitor。
+交叉分析后发现，即使控制商品浏览深度，New Visitor在多个浏览层级中的CVR仍然高于Returning Visitor。
+
+![VisitorType × 商品浏览深度] (images/03/conversion_rate_by_product_depth_and_visitor_type.png) 
 
 因此：
 > VisitorType 本身可能包含额外的购买意向信息，不能仅使用浏览深度解释新老访客之间的转化差异。
