@@ -5,7 +5,7 @@
 
 ### Page 1 — Executive Overview
 
-![Executive Overview](images/dashboard/executive_overview.png)
+![Executive Overview](images/dashboard/Interactive Analysis base.png)
 
 ### Page 2 — Behavior & Conversion
 
