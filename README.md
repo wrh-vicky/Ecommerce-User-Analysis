@@ -370,11 +370,11 @@ VisitorType × Product View Depth
   ↓
 25.28%
 ```
-
 随着商品浏览深度增加，Session CVR 整体持续提高。
 
-同时：
 
+
+同时：
 ```text
 购买 Session：
 平均商品页访问次数 = 48.21
@@ -384,7 +384,6 @@ VisitorType × Product View Depth
 平均商品页访问次数 = 28.71
 中位数             = 16
 ```
-
 说明购买 Session 整体表现出更深的商品浏览行为。
 
 > 商品浏览深度与购买意向存在明显正向关联，但该结果属于相关关系，不能直接解释为因果关系。
