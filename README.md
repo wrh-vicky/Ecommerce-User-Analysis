@@ -296,7 +296,7 @@ VisitorType × Product View Depth
 ```
 交叉分析后发现，即使控制商品浏览深度，New Visitor在多个浏览层级中的CVR仍然高于Returning Visitor。
 
-![VisitorType × 商品浏览深度](../images/03/conversion_rate_by_product_depth_and_visitor_type.png) 
+![VisitorType × 商品浏览深度](images/03/conversion_rate_by_product_depth_and_visitor_type.png) 
 
 因此：
 > VisitorType 本身可能包含额外的购买意向信息，不能仅使用浏览深度解释新老访客之间的转化差异。
