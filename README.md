@@ -1,28 +1,36 @@
-# SmartBuy 电商用户增长与转化分析
+# SmartBuy电商用户增长与转化分析
 
 > 基于 SQL、Python、MySQL 与 Power BI 的电商用户行为分析项目，围绕用户购买转化问题，完成从原始数据处理、数据仓库分层、业务分析、用户分层、购买预测到 BI Dashboard 的完整分析链路。
 
-## 0. Power BI最终展示
+## 0. Power BI展示
 
-### 基础数据报表
+### Page 1 — Executive Overview
+
+
+### Page 2 — Behavior & Conversion
+
+
+### Page 3 — High Potential Sessions
 
 ![]()
 ![]()
 ![]()
+
+具体报表展示将在
 
 ## 1. 项目简介
 
 SmartBuy 是一个模拟电商平台。
 
-项目背景设定为：平台访问量持续增长，但购买增长相对不足。因此，本项目从用户 Session 行为数据出发，分析影响购买转化的潜在因素，并重点回答以下问题：
+项目背景设定为：平台访问量持续增长，但购买增长相对不足。因此，本项目从用户Session行为数据出发，分析影响购买转化的潜在因素，并重点回答以下问题：
 
 * 平台整体购买转化情况如何？
 * 新访客与回访访客的转化表现是否存在差异？
 * 商品浏览深度和停留时间与购买行为有什么关系？
-* BounceRates、ExitRates、PageValues 等指标与购买结果有什么关系？
-* 哪些 Session 已表现出较强购买意向，但最终没有完成购买？
-* 如何通过规则和模型进一步识别高潜 Session？
-* 如何将分析指标沉淀到 DWS / ADS，并提供给 Power BI 使用？
+* BounceRates、ExitRates、PageValues等指标与购买结果有什么关系？
+* 哪些Session已表现出较强购买意向，但最终没有完成购买？
+* 如何通过规则和模型进一步识别高潜Session？
+* 如何将分析指标沉淀到DWS / ADS，并提供给Power BI使用？
 
 最终形成：
 
@@ -56,15 +64,15 @@ Power BI Dashboard
 
 ## 2. 数据集
 
-项目使用 **Online Shoppers Purchasing Intention Dataset**。
+项目使用**Online Shoppers Purchasing Intention Dataset**。
 
 数据粒度为：
 
 ```text
-一行 = 一次网站访问 Session
+一行 = 一次网站访问Session
 ```
 
-因此，本项目中的 12,330 条记录代表 **12,330 个 Session**，而不是 12,330 个独立用户。
+因此，本项目中的12,330条记录代表 **12,330个Session**，而不是12,330个独立用户。
 
 核心数据规模：
 
