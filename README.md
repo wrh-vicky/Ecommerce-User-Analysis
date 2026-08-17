@@ -317,31 +317,30 @@ Conversion Rate      ≈ 15.47%
 | Other             |      85 |       16 | 18.82% |
 
 其中：
-
 ```text
 New Visitor CVR       ≈ 24.91%
 Returning Visitor CVR ≈ 13.93%
 ```
 
 虽然 Returning Visitor：
-
 * Session 数量更多
 * 商品浏览更深
 * 商品页面停留时间更长
 * 贡献的 Purchase Session 更多
-
 但其单次 Session 转化率反而低于 New Visitor。
 
 进一步进行：
-
 ```text
 VisitorType × Product View Depth
 ```
-
 交叉分析后发现，即使控制商品浏览深度，New Visitor 在多个浏览层级中的 CVR 仍然高于 Returning Visitor。
 
-因此：
+### VisitorType × 商品浏览深度 
 
+![VisitorType × 商品浏览深度](images/03/conversion_rate_by_product_depth_and_visitor_type.png) 
+从不同商品浏览深度进一步比较可以发现，在多个浏览层级中，New Visitor 的 Session CVR 仍然高于 Returning Visitor。
+
+因此：
 > VisitorType 本身可能包含额外的购买意向信息，不能仅使用浏览深度解释新老访客之间的转化差异。
 
 ---
