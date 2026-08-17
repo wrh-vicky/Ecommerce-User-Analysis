@@ -364,6 +364,7 @@ VisitorType × Product View Depth
 | 20+ min   |   3,780 |      891 | 23.57% |
 
 ![商品停留时间与转化率](images/02/product_duration_group.png)
+
 随着商品页面停留时间增加，Session CVR整体呈上升趋势：
 
 转化率表现为：
@@ -542,6 +543,22 @@ Without PageValues    ≈ 0.6679
 
 同时需要注意，在实际业务部署前需要确认 PageValues 在预测发生时是否已经可获得，避免潜在的数据泄漏问题。
 
+![Logistic Regression Confusion Matrix](images/03/confusion_matrix.png)
+
+混淆矩阵用于观察模型对购买和未购买 Session 的分类结果：
+- TN：实际未购买，模型预测未购买
+- FP：实际未购买，模型预测购买
+- FN：实际购买，模型预测未购买
+- TP：实际购买，模型预测购买
+
+对于高潜Session识别场景，需要特别关注FN，因为FN越多，意味着模型遗漏的真实购买Session越多。
+
+![Logistic Regression ROC Curve](images/03/roc_curve_logistic_regression.png)
+
+Logistic Regression的ROC曲线明显高于随机分类基准线，说明模型对购买和未购买Session具有较好的整体区分能力。 
+
+> ROC-AUC衡量模型整体排序与区分能力，而Recall受到最终分类阈值影响，因此较高的ROC-AUC与某一阈值下较低的Recall并不矛盾。
+
 ---
 
 ## 8.2 Random Forest
@@ -550,6 +567,8 @@ Random Forest 用于补充验证：
 ```text
 非线性关系 + 变量交互 + Feature Importance
 ```
+
+![Random Forest Feature Importance](images/03/feature_importance.png)
 
 主要Feature Importance：
 | Feature                 | Importance |
@@ -678,6 +697,10 @@ threshold = 0.2
 ```
 
 因此模型阈值应该根据运营成本进行选择。
+
+![分类阈值与Precision Recall F1](images/03/precision_recall_f1.png) 
+
+随着分类阈值提高，Precision整体提高，而Recall下降，体现出典型的Precision-Recall Trade-off。
 
 ### 低成本触达
 
