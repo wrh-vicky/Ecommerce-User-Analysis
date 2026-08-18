@@ -9,7 +9,7 @@
 
 ### Page 2 — Behavior & Conversion
 
-![Behavior & Conversion](images\dashboard\behavior_conversion.png)
+![Behavior & Conversion](images/dashboard/Behavior_Conversion_base.png)
 
 ### Page 3 — High Potential Sessions
 
