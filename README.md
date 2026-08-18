@@ -296,7 +296,7 @@ VisitorType × Product View Depth
 ```
 交叉分析后发现，即使控制商品浏览深度，New Visitor在多个浏览层级中的CVR仍然高于Returning Visitor。
 
-![VisitorType × 商品浏览深度](images\03\conversion_rate_by_product_depth_and_visitor_type.png) 
+![VisitorType × 商品浏览深度](images/03/conversion_rate_by_product_depth_and_visitor_type.png)
 
 因此：
 > VisitorType 本身可能包含额外的购买意向信息，不能仅使用浏览深度解释新老访客之间的转化差异。
@@ -329,7 +329,7 @@ VisitorType × Product View Depth
 ```
 随着商品浏览深度增加，Session CVR整体持续提高。
 
-![购买与未购买Session商品浏览差异](images\02\product_view.png)
+![购买与未购买Session商品浏览差异](images/02/product_view.png)
 
 从商品浏览次数分布可以看到，购买Session整体表现出更深的商品浏览行为。
 
@@ -345,7 +345,7 @@ VisitorType × Product View Depth
 ```
 说明购买Session整体表现出更深的商品浏览行为。
 
-![商品浏览深度与转化率](images\02\product_view_conversion.png)
+![商品浏览深度与转化率](images/02/product_view_conversion.png)
 
 > 商品浏览深度与购买意向存在明显正向关联，但该结果属于相关关系，不能直接解释为因果关系。
 
@@ -363,7 +363,7 @@ VisitorType × Product View Depth
 | 10–20 min |   2,376 |      482 | 20.29% |
 | 20+ min   |   3,780 |      891 | 23.57% |
 
-![商品停留时间与转化率](images\02\product_duration_group.png)
+![商品停留时间与转化率](images/02/product_duration_group.png)
 
 随着商品页面停留时间增加，Session CVR整体呈上升趋势：
 
@@ -383,7 +383,7 @@ VisitorType × Product View Depth
 
 ---
 
-## 6.5 BounceRates / ExitRates 与购买结果存在明显差异
+## 6.5 BounceRates / ExitRates与购买结果存在明显差异
 
 ### BounceRates
 
@@ -426,7 +426,7 @@ ExitRates                  -0.207
 ```
 在当前变量中，PageValues与Revenue的线性相关性明显更强。
 
-![核心行为变量相关性热力图](images\02\correlation_heatmap.png)
+![核心行为变量相关性热力图](images/02/correlation_heatmap.png)
 
 相关性分析显示： 
 - PageValues与Revenue的相关系数约为+0.493；
@@ -533,7 +533,7 @@ With PageValues       ≈ 0.8695
 Without PageValues    ≈ 0.6679
 ```
 
-![PageValues A/B实验ROC曲线](images\03\roc_curve.png)
+![PageValues A/B实验ROC曲线](images/03/roc_curve.png)
 
 在保持训练集、测试集、算法及其他特征一致的情况下： 
 - 包含PageValues：ROC-AUC ≈ 0.8695
@@ -543,7 +543,7 @@ Without PageValues    ≈ 0.6679
 
 同时需要注意，在实际业务部署前需要确认 PageValues 在预测发生时是否已经可获得，避免潜在的数据泄漏问题。
 
-![Logistic Regression Confusion Matrix](images\03\confusion_matrix.png)
+![Logistic Regression Confusion Matrix](images/03/confusion_matrix.png)
 
 混淆矩阵用于观察模型对购买和未购买 Session 的分类结果：
 - TN：实际未购买，模型预测未购买
@@ -553,7 +553,7 @@ Without PageValues    ≈ 0.6679
 
 对于高潜Session识别场景，需要特别关注FN，因为FN越多，意味着模型遗漏的真实购买Session越多。
 
-![Logistic Regression ROC Curve](images\03\roc_curve_logistic_regression.png)
+![Logistic Regression ROC Curve](images/03/roc_curve_logistic_regression.png)
 
 Logistic Regression的ROC曲线明显高于随机分类基准线，说明模型对购买和未购买Session具有较好的整体区分能力。 
 
@@ -568,7 +568,7 @@ Random Forest 用于补充验证：
 非线性关系 + 变量交互 + Feature Importance
 ```
 
-![Random Forest Feature Importance](images\03\feature_importance.png)
+![Random Forest Feature Importance](images/03/feature_importance.png)
 
 主要Feature Importance：
 | Feature                 | Importance |
@@ -698,7 +698,7 @@ threshold = 0.2
 
 因此模型阈值应该根据运营成本进行选择。
 
-![分类阈值与Precision Recall F1](images\03\precision_recall_f1.png) 
+![分类阈值与Precision Recall F1](images/03/precision_recall_f1.png)
 
 随着分类阈值提高，Precision整体提高，而Recall下降，体现出典型的Precision-Recall Trade-off。
 
