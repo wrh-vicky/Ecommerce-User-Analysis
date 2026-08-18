@@ -827,7 +827,7 @@ View → Product Detail → Add Cart → Checkout → Payment → Purchase
 
 # 13. Power BI Interactive Analysis Examples
 
-## User Segment Analysis（用户分群分析）
+## 13.1 User Segment Analysis（用户分群分析）
 
 * 目的：
 通过VisitorType筛选，分析不同用户群体的购买行为差异。
@@ -855,7 +855,8 @@ View → Product Detail → Add Cart → Checkout → Payment → Purchase
 ![case1](images/dashboard/case1.png)
 
 结论
-> New Visitor在整体浏览深度和停留行为方面表现为 ______，其Conversion Rate为 ______。相比Returning Visitor，说明 ______。
+> New Visitor在整体浏览深度和停留行为方面表现较强，平均浏览商品数量为18.05，平均停留时间为10.61。随着Product View Depth和Product Duration增加，该用户群体的 Conversion Rate呈现明显提升趋势，说明浏览参与程度与购买行为存在较强关联。相比低参与度Session，高浏览深度和长停留时间的新访客更值得进行后续转化运营。
+> 该分析帮助运营人员识别高参与度新用户群体，并通过浏览深度和停留时间判断潜在购买意向。
 
 ### Case 2：比较同一月份不同访客类型表现
 
@@ -885,7 +886,8 @@ View → Product Detail → Add Cart → Checkout → Payment → Purchase
 ![case2](images/dashboard/case2-2.png)
 
 结论：
-> 在May月份，New Visitor CVR为 ______，Returning Visitor CVR为 ______。虽然Returning Visitor浏览次数 ______，但购买转化表现 ______。
+> 在May月份，New Visitor平均浏览商品数量为17.97，平均商品页面停留时间为11.07；Returning Visitor平均浏览商品数量提升至27.38，平均停留时间达到16.92。相比New Visitor，Returning Visitor表现出更深的浏览行为和更高的网站参与度，但同时具有更高的Exit Rate（0.05 vs 0.02）和Bounce Rate（0.03 vs 0.01），说明老访客虽然对商品具有更强兴趣，但部分用户仍可能在购买决策阶段流失。
+> 该分析说明不同访客类型在购买路径中扮演不同角色。
 
 ### Case 3：寻找最值得运营的新用户群体
 
@@ -902,9 +904,10 @@ Duration
 ![case3](images/dashboard/case3.png)
 
 结论：
-> November的New Visitor中，TrafficType 2用户平均浏览深度为 ______，CVR为 ______。该群体相比其他新访客表现 ______，可以作为重点运营对象。
+> November月份来自TrafficType 2的New Visitor表现出较高的用户参与度，平均商品浏览次数为21.19，平均商品页面停留时间为12.85。从转化趋势来看，随着浏览深度增加，Conversion Rate明显提升，其中浏览50+个商品页面的用户转化率超过40%；同时，停留时间超过20分钟的用户转化率最高，约为44%。该群体具有较强的浏览意愿和购买潜力，是值得重点关注的新用户群体。
+> November的TrafficType 2新访客已经表现出较强购买兴趣，可通过精准推荐、优惠券或首次购买激励促进其完成转化。
 
-## Time & Channel Performance Analysis（时间与渠道分析）
+## 13.2 Time & Channel Performance Analysis（时间与渠道分析）
 
 * 目的：
 通过Month和TrafficType筛选，分析不同时间、来源渠道的流量质量。
@@ -930,7 +933,8 @@ Duration
 ![case4](images/dashboard/case4.png)
 
 结论：
-> 在 ______ 月份，平台Session数量达到 ______，Conversion Rate为 ______。该月份用户行为特点表现为 ______。
+> 在November月份，平台共获得882个Session，其中217个Session完成购买，整体Conversion Rate达到24.60%。从用户结构来看，New Visitor的转化率最高，约为36%，高于Returning Visitor（约22%）；同时，随着商品浏览深度增加，用户转化率明显提升，其中浏览50+个商品页面的用户Conversion Rate超过40%。说明November期间平台流量质量较高，高参与度用户具有更强的购买倾向。
+> November是高价值转化月份，应重点关注高浏览深度用户和新访客群体，通过精准推荐和营销激励进一步提升订单转化。
 
 ### Case 5：5月新访客在某渠道中的购买表现
 
@@ -950,7 +954,8 @@ CVR by Product Duration
 ![case5](images/dashboard/case5.png)
 
 结论：
-> 在May月份，TrafficType 4带来的New Visitor 平均浏览商品数量为 ______，平均停留时间为 ______。该群体Conversion Rate为 ______，说明该渠道对于新用户获取具有 ______ 的效果。
+> 在May月份，TrafficType4带来的 New Visitor 表现出较高的用户参与度，平均商品浏览次数为19.17，平均商品页面停留时间为11.94。从转化行为来看，随着商品浏览深度增加，用户Conversion Rate明显提升，其中21-50次商品浏览用户转化率最高，接近60%；同时，停留时间超过20分钟的用户转化率达到约80%。此外，该群体整体Exit Rate（0.01）和Bounce Rate（接近 0）较低，说明TrafficType 4获取的新用户具有较强浏览意愿和较高购买潜力。
+> May月份TrafficType 4是高质量新用户来源渠道，应针对该渠道用户加强商品推荐和首次购买激励，提高高意向访客转化率。
 
 ### Case 6：11月回访用户来自高流量渠道的转化分析
 
@@ -968,7 +973,8 @@ Duration
 ![case6](images/dashboard/case6.png)
 
 结论：
-November的Returning Visitor在TrafficType 2渠道下贡献Session数量为 ______，CVR为 ______。该群体表现为浏览深度 ______，但最终购买转化 ______。
+> November月份TrafficType 2渠道下的Returning Visitor表现出较高的用户参与度，平均商品浏览次数达到67.59，平均商品页面停留时间达到43.48，说明该渠道用户具有较强的商品探索行为。从转化趋势来看，随着浏览深度增加，Conversion Rate持续提升，其中浏览50+个商品页面的用户转化率超过40%；同时停留时间超过20分钟的用户转化率最高，约为38%。虽然该群体存在一定Exit Rate（0.03），但整体浏览深度和停留时长较高，表明TrafficType 2能够带来高参与度的回访用户。
+> TrafficType 2是高价值回访用户的重要来源，应针对该渠道加强个性化推荐和召回策略，减少用户在购买决策阶段的流失。
 
 ### Case 7：分析某渠道的新用户质量
 
@@ -986,9 +992,10 @@ Conversion Rate
 ![case7](images/dashboard/case7.png)
 
 结论：
-> August月份TrafficType 2获取的新用户平均Bounce Rate为 ______，Exit Rate为 ______，CVR为 ______。该渠道带来的用户质量表现为 ______。
+> August月份TrafficType 2获取的新用户表现出较好的参与度和转化潜力。该群体在不同浏览深度下均表现出较高的Conversion Rate，其中0-5次商品浏览用户转化率最高，约为50%；随着商品浏览深度增加，转化率整体仍保持较高水平。同时，商品停留时间在2-5分钟时达到最高转化率，约为42%。此外，该渠道用户的Bounce Rate和Exit Rate主要集中在较低区间（0-2%），说明TrafficType 2带来的新用户整体流失较少，用户质量较高。
+> August月份TrafficType 2是质量较高的新用户来源渠道，应持续投入渠道优化，并通过个性化推荐和首购激励促进用户完成转化。
 
-## High Potential Session Analysis（高潜用户分析）
+## 13.3 High Potential Session Analysis（高潜用户分析）
 
 * 目的：
 发现已经表现出购买兴趣，但是最终没有购买的Session。
