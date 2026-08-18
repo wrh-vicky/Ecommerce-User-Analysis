@@ -1,21 +1,59 @@
 # SmartBuy 电商用户增长与转化分析
 > 基于SQL、Python、MySQL与Power BI的电商用户行为分析项目，围绕购买转化问题，完成原始数据处理、数仓分层、业务分析、高潜Session 识别、购买预测与 BI Dashboard 展示。
 
-## 0. BI报表
+# 0. Power BI Dashboard
 
-### Page 1 — Interactive Analysis
+Dashboard 主要设计为三个页面。
+
+## Page 1 — Executive Overview
+
+回答：
+> 平台整体经营与购买转化情况如何？
+
+主要展示：
+* Total Sessions
+* Purchase Sessions
+* Conversion Rate
+* High Potential Sessions
+* Monthly Session Trend
+* Monthly CVR
+* VisitorType CVR
+* Product View Depth CVR
 
 ![Interactive Analysis](images/dashboard/Interactive_Analysis_base01.png)
 
 ![Interactive Analysis](images/dashboard/Interactive_Analysis_base02.png)
 
-### Page 2 — Behavior & Conversion
+## Page 2 — Behavior & Conversion
+
+回答：
+> 哪些Session行为与购买转化存在明显关系？
+
+主要关注：
+* ProductRelated
+* ProductRelated_Duration
+* BounceRates
+* ExitRates
+* PageValues
+* VisitorType
+* Session Segment
 
 ![Behavior & Conversion](images/dashboard/Behavior_Conversion_base01.png)
 
 ![Behavior & Conversion](images/dashboard/Behavior_Conversion_base02.png)
 
-### Page 3 — High Potential Sessions
+## Page 3 — High Potential Sessions
+
+回答：
+> 哪些未购买Session最值得业务进一步关注？
+
+主要展示：
+* High Potential Session Volume
+* High Potential Rate
+* Month Distribution
+* TrafficType Distribution
+* High Potential Profile
+* Session Segment
 
 ![High Potential Sessions](images/dashboard/High_Potential_Analysis_base01.png)
 
@@ -25,7 +63,7 @@
 
 ---
 
-## 1. 项目简介
+# 1. 项目简介
 
 SmartBuy是一个模拟电商平台。
 
@@ -47,7 +85,7 @@ Raw Data → ODS → DWD → SQL Analysis → Python EDA → Session Segmentatio
 
 ---
 
-## 2. 数据集
+# 2. 数据集
 
 项目使用**Online Shoppers Purchasing Intention Dataset**。
 
@@ -96,9 +134,9 @@ docs/data_dictionary.md
 
 ---
 
-## 3. 技术栈
+# 3. 技术栈
 
-### 数据处理与分析
+## 数据处理与分析
 
 * MySQL
 * SQL
@@ -106,23 +144,23 @@ docs/data_dictionary.md
 * Pandas
 * NumPy
 
-### 数据可视化
+## 数据可视化
 
 * Matplotlib
 * Power BI
 
-### 机器学习
+## 机器学习
 
 * Scikit-learn
 * Logistic Regression
 * Random Forest
 
-### 数据库访问
+## 数据库访问
 
 * SQLAlchemy
 * PyMySQL
 
-### 开发环境
+## 开发环境
 
 * Jupyter Notebook
 * MySQL
@@ -131,7 +169,7 @@ docs/data_dictionary.md
 
 ---
 
-## 4. 项目架构
+# 4. 项目架构
 
 项目采用分层数据架构：
 ```text
@@ -148,7 +186,7 @@ ADS
 Power BI
 ```
 
-### ODS
+## ODS
 
 ODS层保留原始数据结构，用于承接CSV数据并进行基础数据质量检查。
 
@@ -160,7 +198,7 @@ ODS层保留原始数据结构，用于承接CSV数据并进行基础数据质�
 * 类别字段检查
 * 基础数据质量验证
 
-### DWD
+## DWD
 
 DWD层将原始Session数据进行标准化，并生成业务分析所需的基础衍生字段。
 
@@ -182,7 +220,7 @@ DWD保持：
 ```
 并作为后续SQL、Python和数仓聚合的统一明细数据源。
 
-### DWS
+## DWS
 
 DWS层按照不同业务主题对Session数据进行汇总。
 
@@ -206,7 +244,7 @@ dws_session_segment_summary
 * 代理行为漏斗
 * Session 行为分层
 
-### ADS
+## ADS
 
 ADS面向Dashboard和业务应用输出最终指标。
 
@@ -226,7 +264,7 @@ ads_high_potential_profile
 
 ---
 
-## 5. 项目分析流程
+# 5. 项目分析流程
 
 整个项目主要分为以下阶段：
 ```text
@@ -787,59 +825,48 @@ Purchase
 View → Product Detail → Add Cart → Checkout → Payment → Purchase
 ```
 
----
+# 13. Power BI Interactive Analysis Examples
 
-# 13. Power BI Dashboard
+## Case 1：不同访客类型的转化差异分析
 
-最终将经过验证的指标沉淀到DWS / ADS，并使用Power BI构建业务Dashboard。
+BI筛选条件
+* VisitorType：New Visitor
+* Month：All
+* TrafficType：All
 
-Dashboard 主要设计为三个页面。
+观察：
 
-## Page 1 — Executive Overview
+* Avg Product Views
+* Avg Product Duration
+* CVR by Product View Depth
+* CVR by Product Duration
+* CVR by Bounce Rate
+* CVR by Exit Rate
 
-回答：
-> 平台整体经营与购买转化情况如何？
+BI dashboard
 
-主要展示：
-* Total Sessions
-* Purchase Sessions
-* Conversion Rate
-* High Potential Sessions
-* Monthly Session Trend
-* Monthly CVR
-* VisitorType CVR
-* Product View Depth CVR
+![case1](images/dashboard/case1.png)
 
-![]()
+结论
+> New Visitor在整体浏览深度和停留行为方面表现为 ______，其 Conversion Rate 为 ______。相比 Returning Visitor，说明 ______。
 
-## Page 2 — Behavior & Conversion
+## Case 2：月份维度下的转化趋势分析
 
-回答：
-> 哪些Session行为与购买转化存在明显关系？
+BI筛选条件
+* VisitorType：All
+* Month：November
+* TrafficType：All
 
-主要关注：
-* ProductRelated
-* ProductRelated_Duration
-* BounceRates
-* ExitRates
-* PageValues
-* VisitorType
-* Session Segment
+观察：
+* Session数量
+* Purchase数量
+* CVR by Product View Depth
+* CVR by Visitor Type
 
-![]()
+![case2](images/dashboard/case2.png)
 
-## Page 3 — High Potential Sessions
-
-回答：
-> 哪些未购买Session最值得业务进一步关注？
-
-主要展示：
-* High Potential Session Volume
-* High Potential Rate
-* Month Distribution
-* TrafficType Distribution
-* High Potential Profile
-* Session Segment
+结论
+> 在 ______ 月份，平台 Session 数量达到 ______，Conversion Rate 为 ______。该月份用户行为特点表现为 ______。
 
 ---
 
