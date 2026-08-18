@@ -940,16 +940,16 @@ Duration
 
 筛选条件：
 * VisitorType：New Visitor
-Month：May
-TrafficType：4
+* Month：May
+* TrafficType：4
 
 查看：
 * Avg Product Views
-Avg Product Duration
-Avg Bounce Rate
-Avg Exit Rate
-CVR by Product View Depth
-CVR by Product Duration
+* Avg Product Duration
+* Avg Bounce Rate
+* Avg Exit Rate
+* CVR by Product View Depth
+* CVR by Product Duration
 
 ![case5](images/dashboard/case5.png)
 
@@ -961,14 +961,14 @@ CVR by Product Duration
 
 筛选条件:
 * VisitorType：Returning Visitor
-Month：November
-TrafficType：2
+* Month：November
+* TrafficType：2
 
 查看：
 * Session数量
-Conversion Rate
-Product View Depth
-Duration
+* Conversion Rate
+* Product View Depth
+* Duration
 
 ![case6](images/dashboard/case6.png)
 
@@ -980,14 +980,14 @@ Duration
 
 筛选条件：
 * VisitorType：New Visitor
-Month：August
-TrafficType：2
+* Month：August
+* TrafficType：2
 
 查看：
 * Bounce Rate
-Exit Rate
-Product Duration
-Conversion Rate
+* Exit Rate
+* Product Duration
+* Conversion Rate
 
 ![case7](images/dashboard/case7.png)
 
@@ -1000,45 +1000,46 @@ Conversion Rate
 * 目的：
 发现已经表现出购买兴趣，但是最终没有购买的Session。
 
-### Case 8：高浏览深度用户为什么没有购买？
+### Case 8：高浏览深度用户为什么没有购买
 
 筛选条件：
 * VisitorType：Returning Visitor
-Month：November
-TrafficType：2
-Revenue：False
+* Month：November
+* TrafficType：2
+* Revenue：False
 
 查看：
 * High Potential Count
-Product Views
-Duration
+* Product Views
+* Duration
 
 ![case8](images/dashboard/case8-1.png)
 
 ![case8](images/dashboard/case8-2.png)
 
 结论：
-> November的Returning Visitor在TrafficType 2中产生 ______ 个未购买高潜Session。这些用户平均浏览 ______ 个商品页面，停留 ______，说明其已经具有较强兴趣但存在 ______ 转化阻碍。
+> November月份TrafficType 2的Returning Visitor中，共识别出312个High Potential Sessions，High Potential Share达到31.71%，平均商品浏览次数达到101次。该群体表现出非常高的商品探索深度，同时平均商品浏览深度越高，Conversion Rate越明显提升，其中浏览50+个商品页面的用户转化率超过40%；停留时间超过20分钟的用户转化率也达到约38%。然而，这些Session最终未完成购买，说明用户已经表现出较强购买兴趣，但仍存在购买决策阶段的阻碍。
+> 该群体属于高意向但未转化用户，应优先通过个性化推荐、优惠激励或购物提醒等方式降低购买阻碍，提升潜在订单转化。
 
 ### Case 9：核心高潜用户定位
 
 筛选条件：
 * VisitorType：Returning Visitor
-Month：November
-TrafficType：2
-Session Segment：Both
+* Month：November
+* TrafficType：2
+* Session Segment：Both
 
 查看：
 * Session Count
-Avg Product Views
-Avg Duration
-Purchase Probability
+* Avg Product Views
+* Avg Duration
+* Purchase Probability
 
 ![case9](images/dashboard/case9.png)
 
-分析结论：
-
-该组合筛选得到 ______ 个Core High Potential Sessions，平均商品浏览次数 ______，平均停留时间 ______，购买倾向评分 ______。该群体应该优先进行 ______。
+结论：
+> 在November月份TrafficType 2的Returning Visitor中，共识别出312个High Potential Sessions，占该筛选范围Session的31.71%，平均商品浏览次数达到101次。从Session Segment分布来看，High Potential用户占据较大比例，同时仍存在大量Low Activity NonPurchase用户。该结果表明，部分回访用户已经表现出较高的商品兴趣和浏览深度，但尚未完成购买，其中高潜用户是最值得优先关注的运营对象。
+> 应优先针对High Potential Session进行精准触达，通过个性化推荐、优惠激励或召回策略，将高购买意向但未转化用户转化为实际订单。
 
 ---
 
@@ -1093,8 +1094,6 @@ Purchase Probability
 * Inventory
 * Product
 * Category
-
-
 
 进一步定位真实转化阻碍：
 ```text
