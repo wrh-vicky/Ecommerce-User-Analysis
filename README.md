@@ -5,15 +5,23 @@
 
 ### Page 1 — Interactive Analysis
 
-![Interactive Analysis](images/dashboard/Interactive_Analysis_base.png)
+![Interactive Analysis](images/dashboard/Interactive_Analysis_base01.png)
+
+![Interactive Analysis](images/dashboard/Interactive_Analysis_base02.png)
 
 ### Page 2 — Behavior & Conversion
 
-![Behavior & Conversion](images/dashboard/Behavior_Conversion_base.png)
+![Behavior & Conversion](images/dashboard/Behavior_Conversion_base01.png)
+
+![Behavior & Conversion](images/dashboard/Behavior_Conversion_base02.png)
 
 ### Page 3 — High Potential Sessions
 
-![High Potential Sessions](images\dashboard\high_potential_sessions.png)
+![High Potential Sessions](images/dashboard/High_Potential_Analysis_base01.png)
+
+![High Potential Sessions](images/dashboard/High_Potential_Analysis_base02.png)
+
+![High Potential Sessions](images/dashboard/High_Potential_Analysis_base03.png)
 
 ---
 
