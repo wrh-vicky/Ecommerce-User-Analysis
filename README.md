@@ -827,15 +827,24 @@ View → Product Detail → Add Cart → Checkout → Payment → Purchase
 
 # 13. Power BI Interactive Analysis Examples
 
-## Case 1：不同访客类型的转化差异分析
+## User Segment Analysis（用户分群分析）
 
-BI筛选条件
+* 目的：
+通过VisitorType筛选，分析不同用户群体的购买行为差异。
+
+业务问题：
+```text
+不同类型用户是否具有不同的购买意愿？
+```
+
+### Case 1：不同访客类型的转化差异分析
+
+筛选条件:
 * VisitorType：New Visitor
 * Month：All
 * TrafficType：All
 
 观察：
-
 * Avg Product Views
 * Avg Product Duration
 * CVR by Product View Depth
@@ -843,30 +852,186 @@ BI筛选条件
 * CVR by Bounce Rate
 * CVR by Exit Rate
 
-BI dashboard
-
 ![case1](images/dashboard/case1.png)
 
 结论
-> New Visitor在整体浏览深度和停留行为方面表现为 ______，其 Conversion Rate 为 ______。相比 Returning Visitor，说明 ______。
+> New Visitor在整体浏览深度和停留行为方面表现为 ______，其Conversion Rate为 ______。相比Returning Visitor，说明 ______。
 
-## Case 2：月份维度下的转化趋势分析
+### Case 2：比较同一月份不同访客类型表现
 
-BI筛选条件
+业务问题：
+```text
+5月份，新访客和老访客谁更容易购买？
+```
+
+第一次筛选：
+* Month：May
+* TrafficType：All
+* VisitorType：New Visitor
+
+
+第二次筛选：
+* Month：May
+* TrafficType：All
+* VisitorType：Returning Visitor
+
+查看：
+* CVR
+* Avg Product Views
+* Duration
+
+![case2](images/dashboard/case2-1.png)
+
+![case2](images/dashboard/case2-2.png)
+
+结论：
+> 在May月份，New Visitor CVR为 ______，Returning Visitor CVR为 ______。虽然Returning Visitor浏览次数 ______，但购买转化表现 ______。
+
+### Case 3：寻找最值得运营的新用户群体
+
+筛选条件：
+VisitorType：New Visitor
+Month：November
+TrafficType：2
+
+查看：
+* CVR
+Product View Depth
+Duration
+
+![case3](images/dashboard/case3.png)
+
+结论：
+> November的New Visitor中，TrafficType 2用户平均浏览深度为 ______，CVR为 ______。该群体相比其他新访客表现 ______，可以作为重点运营对象。
+
+## Time & Channel Performance Analysis（时间与渠道分析）
+
+* 目的：
+通过Month和TrafficType筛选，分析不同时间、来源渠道的流量质量。
+
+业务问题：
+```text
+哪些月份、哪些渠道带来的用户价值更高？
+```
+
+### Case 4：月份维度下的转化趋势分析
+
+筛选条件：
 * VisitorType：All
 * Month：November
 * TrafficType：All
 
-观察：
+查看：
 * Session数量
 * Purchase数量
 * CVR by Product View Depth
 * CVR by Visitor Type
 
-![case2](images/dashboard/case2.png)
+![case4](images/dashboard/case4.png)
 
-结论
-> 在 ______ 月份，平台 Session 数量达到 ______，Conversion Rate 为 ______。该月份用户行为特点表现为 ______。
+结论：
+> 在 ______ 月份，平台Session数量达到 ______，Conversion Rate为 ______。该月份用户行为特点表现为 ______。
+
+### Case 5：5月新访客在某渠道中的购买表现
+
+筛选条件：
+* VisitorType：New Visitor
+Month：May
+TrafficType：4
+
+查看：
+* Avg Product Views
+Avg Product Duration
+Avg Bounce Rate
+Avg Exit Rate
+CVR by Product View Depth
+CVR by Product Duration
+
+![case5](images/dashboard/case5.png)
+
+结论：
+> 在May月份，TrafficType 4带来的New Visitor 平均浏览商品数量为 ______，平均停留时间为 ______。该群体Conversion Rate为 ______，说明该渠道对于新用户获取具有 ______ 的效果。
+
+### Case 6：11月回访用户来自高流量渠道的转化分析
+
+筛选条件:
+* VisitorType：Returning Visitor
+Month：November
+TrafficType：2
+
+查看：
+* Session数量
+Conversion Rate
+Product View Depth
+Duration
+
+![case6](images/dashboard/case6.png)
+
+结论：
+November的Returning Visitor在TrafficType 2渠道下贡献Session数量为 ______，CVR为 ______。该群体表现为浏览深度 ______，但最终购买转化 ______。
+
+### Case 7：分析某渠道的新用户质量
+
+筛选条件：
+* VisitorType：New Visitor
+Month：August
+TrafficType：2
+
+查看：
+* Bounce Rate
+Exit Rate
+Product Duration
+Conversion Rate
+
+![case7](images/dashboard/case7.png)
+
+结论：
+> August月份TrafficType 2获取的新用户平均Bounce Rate为 ______，Exit Rate为 ______，CVR为 ______。该渠道带来的用户质量表现为 ______。
+
+## High Potential Session Analysis（高潜用户分析）
+
+* 目的：
+发现已经表现出购买兴趣，但是最终没有购买的Session。
+
+### Case 8：高浏览深度用户为什么没有购买？
+
+筛选条件：
+* VisitorType：Returning Visitor
+Month：November
+TrafficType：2
+Revenue：False
+
+查看：
+* High Potential Count
+Product Views
+Duration
+
+![case8](images/dashboard/case8-1.png)
+
+![case8](images/dashboard/case8-2.png)
+
+结论：
+> November的Returning Visitor在TrafficType 2中产生 ______ 个未购买高潜Session。这些用户平均浏览 ______ 个商品页面，停留 ______，说明其已经具有较强兴趣但存在 ______ 转化阻碍。
+
+### Case 9：核心高潜用户定位
+
+筛选条件：
+* VisitorType：Returning Visitor
+Month：November
+TrafficType：2
+Session Segment：Both
+
+查看：
+* Session Count
+Avg Product Views
+Avg Duration
+Purchase Probability
+
+![case9](images/dashboard/case9.png)
+
+分析结论：
+
+该组合筛选得到 ______ 个Core High Potential Sessions，平均商品浏览次数 ______，平均停留时间 ______，购买倾向评分 ______。该群体应该优先进行 ______。
 
 ---
 
