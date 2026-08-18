@@ -5,7 +5,7 @@
 
 ### Page 1 — Interactive Analysis
 
-![Interactive Analysis](images\dashboard\Interactive_Analysis_base.png)
+![Interactive Analysis](images/dashboard/Interactive_Analysis_base.png)
 
 ### Page 2 — Behavior & Conversion
 
